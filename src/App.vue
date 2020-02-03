@@ -5,18 +5,30 @@
       <button v-on:click="dinamicCmp = 'appB'">B</button>
       <button v-on:click="dinamicCmp = 'appC'">C</button>
     </div>
-    <component v-bind:is="dinamicCmp">
-      <h5>Some title</h5>
-      <p>
-        {{ title }}
-      </p>
-    </component>
+    <keep-alive>
+      <component v-bind:is="dinamicCmp">
+        <h5>Some title</h5>
+        <p>
+          {{ title }}
+        </p>
+      </component>
+    </keep-alive>
+
     <app-quote>
       <h5 slot="title">Some title</h5>
       <p slot="content">
         {{ title }}
       </p>
     </app-quote>
+
+    <div style="{backgound:grey}">
+      <keep-alive>
+        <app-y v-if="show"></app-y>
+      </keep-alive>
+
+      <app-z v-if="!show"></app-z>
+    </div>
+    <button v-on:click="show = !show">change</button>
   </div>
 </template>
 
@@ -25,11 +37,14 @@ import Quote from "./Quote";
 import A from "./A";
 import B from "./B";
 import C from "./C";
+import Y from "./Y";
+import Z from "./Z";
 
 export default {
   data() {
     return {
-      dinamicCmp: "appA",
+      show: false,
+      dinamicCmp: "",
       title:
         "  Lorem, ipsum dolor sit amet consectetur adipisicing elit. At velit dolorexpedita amet. Ad, veritatis obcaecati accusamus deleniti voluptates inminima. Laboriosam odit expedita illum in beatae veniam at similique."
     };
@@ -43,7 +58,9 @@ export default {
     appQuote: Quote,
     appA: A,
     appB: B,
-    appC: C
+    appC: C,
+    appY: Y,
+    appZ: Z
   }
 };
 </script>
